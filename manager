@@ -1,0 +1,150 @@
+import os
+import fnmatch
+from pathlib import Path
+
+mfile = ("""You choose to work with files.
+You have these options:
+1) delete file
+2) rename file
+3) add content to this file
+4) rewrite content of this file
+5) return to the parent directory
+Choose one of the numbers that the task corresponds to.""")
+
+mdir = ("""You choose to work with directory.
+You have these options:
+1) rename directory
+2) print number of files in it
+3) print number of directories in it
+4) list content of the directory 
+5) add file to this directory
+6) add new directory to this directory
+Choose one of the numbers that the task corresponds to.""")
+
+print("""Hi, what is your name?""")
+name = str(input())
+path = os.getcwd()
+
+#file
+def deletefile():
+    print("What is the name of the file you want to delete?")
+    fname = str(input())
+    os.remove(fname)
+    print('File was deleted successfully')
+
+def renamefile():
+    oldf = input("File name:")
+    newf = input("Name which you want:")
+    os.rename(oldf,newf)
+    print('File has been renamed successfully')
+
+def addcontent():
+    yfile = input("Open file : ")
+    t=open(yfile,"at")
+    content=input()
+    t.write(content)
+    t.close()
+    print('The task was completed')
+
+def rewrite():
+    yfile = input("open this file :")
+    t=open(yfile,"wt")
+    Newname=input()
+    t.write(Newname)
+    t.close()
+    print('The task was completed')
+
+def parent():
+    nfile = input("need this file :")
+    pathf = Path(os.path.abspath(nfile)).parent
+    print('That is your parent directory: ', pathf)
+
+#directory 
+def renamedir():
+    oldn=input("Old name:")
+    newn=input("New name:")
+    os.rename(oldn,newn)
+    print('Directory has been renamed successfully')
+
+def numfiles():
+    cnt = 0
+    with os.scandir(path) as entries:
+        for entry in entries:
+            if entry.is_file():
+                cnt += 1
+    print('Number of files in directory: ' + str(cnt) )
+
+def numdir():
+    with os.scandir(path) as ent:
+        cnt = 0
+        for entry in ent:
+            if entry.is_dir():
+                cnt += 1
+    print('Number of directories in directory: ' + str(cnt))
+
+def content():
+    with os.scandir(path) as entries:
+        for entry in entries:
+            if entry.is_file():
+                print('That is a file: ',entry.name)
+            if entry.is_dir():
+                print('That is a directory: ', entry.name)
+
+def addfile():
+    name = input("Write name of new file")
+    open(name, "x")
+    print('The task was completed')
+    
+def addnewdir():
+    name = input("Write name of new directory")
+    os.mkdir(name)
+    print('The task was completed')
+
+def main(choise):
+    if choise == 1:
+        print(mfile)
+        act = int(input())
+        if act == 1:
+            deletefile()  
+        elif act == 2:
+            renamefile()
+        elif act == 3:
+            addcontent()
+        elif act == 4:
+            rewrite()
+        elif act == 5:
+            parent()
+    elif choise == 2:
+        print(mdir)
+        act = int(input())
+        if act == 1:
+            renamedir()  
+        elif act == 2:
+            numfiles()
+        elif act == 3:
+            numdir()
+        elif act == 4:
+            content()
+        elif act == 5:
+            addfile()
+        elif act == 6:
+            addnewdir()
+
+print( name + """, the manager is ready to work with you. 
+If you want to work with files, you must choose 1. 
+If you want to work with directory, you must choose 2.""")
+ch = int(input())
+main(ch)
+
+stop = False
+while stop == False:
+    print( name + """, let's continue. 
+If you want to work with files, you must choose 1. 
+If you want to work with directory, you must choose 2. 
+Or if you want to finish select 0.""")
+    ch = int(input())
+    if ch != 0:
+        main(ch)
+    else:
+        stop = True
+        print('It was nice to work with you!')
