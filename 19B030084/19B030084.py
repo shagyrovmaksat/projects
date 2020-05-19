@@ -502,7 +502,7 @@ def Multiplayer_mode(room):
         event_client.daemon = True
         event_client.start()
     
-    run_multi = True
+    #run_multi = True
     while run_multi:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
