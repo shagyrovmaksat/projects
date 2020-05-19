@@ -122,7 +122,7 @@ class Client:
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
             self.response = json.loads(body)
-            print(self.response)
+            #print(self.response)
 
     def call(self, key, message={}): 
         self.response = None
