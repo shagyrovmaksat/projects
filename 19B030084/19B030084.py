@@ -833,7 +833,7 @@ def draw_tank(x, y, direction, id):
 
 def map():
     l=1
-    f = open(r"C:\Users\Админ\Desktop\tank\maps\map{}.txt".format(m), "r")
+    f = open(r"maps\map{}.txt".format(m), "r")
     for line in f.readlines():
         for i in range(0,26):
             if line[i] == "@":
